@@ -13,7 +13,8 @@ namespace ToDoList
     }
     static void ViewTheMenu(){
       Console.WriteLine("Would you like to add an item to your list or view your list? Type (Add/View)");
-      string answer = Console.ReadLine();
+      string stringAnswer = Console.ReadLine();
+      string answer = stringAnswer.Replace(" ", "");
       if (answer == "Add" || answer == "add")
       {
         AddToList();
@@ -22,6 +23,10 @@ namespace ToDoList
       {
         ViewTheList();
       } 
+      else
+      {
+        ViewTheMenu();
+      }
     }
     static void AddToList()
     {
@@ -33,10 +38,21 @@ namespace ToDoList
     }
     static void ViewTheList()
     {
-      
       List<Item> result = Item.GetAll();
-      Console.WriteLine(result[0]);
-      ViewTheMenu();
+      if (result.Count <= 0)
+      {
+        Console.WriteLine("Please add an item");
+         ViewTheMenu();
+      }
+      else
+      {
+      for (int index = 0; index < result.Count; index++)
+      {
+        Console.WriteLine("___________________");
+        Console.WriteLine((index+1) + "." + result[index].Description);
+      }
+        ViewTheMenu();
+      }
     }
-  }
+}
 }
